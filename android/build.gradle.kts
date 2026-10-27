@@ -1,10 +1,5 @@
 allprojects {
     repositories {
-        // This network cannot reach dl.google.com, so mirrors are listed first.
-        // The official repositories remain as fallbacks for other machines.
-        maven("https://mirrors.cloud.tencent.com/nexus/repository/maven-public/")
-        maven("https://maven.aliyun.com/repository/google")
-        maven("https://maven.aliyun.com/repository/public")
         google()
         mavenCentral()
     }

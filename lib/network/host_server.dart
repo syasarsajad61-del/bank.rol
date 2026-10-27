@@ -1,272 +1,227 @@
+// [M01][M06][M08][M09][M11][M13][A01][A05][A06] Host authority.
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:uuid/uuid.dart';
+import '../core/models/game_state.dart';
+import '../core/utils/logger.dart';
+import 'protocol.dart';
+import 'snapshot.dart';
 
-import 'package:shelf/shelf.dart';
-import 'package:shelf/shelf_io.dart' as shelf_io;
-import 'package:shelf_web_socket/shelf_web_socket.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
-
-import '../models/action_request.dart';
-
-/// A connected socket plus its liveness bookkeeping.
-class _Peer {
-  _Peer(this.id, this.channel);
-
-  final String id;
-  final WebSocketChannel channel;
-  DateTime lastSeen = DateTime.now();
-  bool closed = false;
-
-  void touch() => lastSeen = DateTime.now();
+class Peer {
+  final String id, name, address;
+  WebSocket? socket;
+  SecureProtocol codec;
+  int lastSeen;
+  Future<void> outgoing = Future.value(), incoming = Future.value();
+  Peer(this.id, this.name, this.address, this.socket, this.codec)
+    : lastSeen = DateTime.now().millisecondsSinceEpoch;
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'address': address,
+    'connected': socket != null,
+  };
 }
 
-/// Host-side WebSocket server.
-///
-/// Owns the transport only: it never touches game rules. Every decoded
-/// [ActionRequest] is handed to [onMessage] together with the peer id, and
-/// the game controller decides what to do with it.
 class HostServer {
-  HostServer({
-    required this.onPeerConnected,
-    required this.onPeerDisconnected,
-    required this.onMessage,
-    this.port = 8080,
-    this.heartbeatInterval = const Duration(seconds: 3),
-    this.peerTimeout = const Duration(seconds: 12),
-  });
-
-  final void Function(String socketId)? onPeerConnected;
-  final void Function(String socketId)? onPeerDisconnected;
-  final void Function(String socketId, WireMessage message) onMessage;
-
+  HttpServer? server;
+  final String hostId, hostName, pin, session;
   final int port;
-  final Duration heartbeatInterval;
-  final Duration peerTimeout;
-
-  HttpServer? _httpServer;
-  Timer? _heartbeat;
-  final Map<String, _Peer> _peers = <String, _Peer>{};
-  int _peerSeq = 0;
-  bool _running = false;
-  int _boundPort = 0;
-
-  bool get isRunning => _running;
-
-  int get boundPort => _boundPort;
-
-  int get peerCount => _peers.length;
-
-  /// Starts listening. Tries [port], then the next few ports if busy.
-  Future<int> start() async {
-    if (_running) {
-      return _boundPort;
-    }
-    final Handler wsHandler = webSocketHandler(
-      (WebSocketChannel channel, String? protocol) => _accept(channel),
-      pingInterval: const Duration(seconds: 15),
-    );
-
-    final Handler pipeline = const Pipeline()
-        .addMiddleware(logRequests(logger: (String message, bool isError) {}))
-        .addHandler(wsHandler);
-
-    Object? lastError;
-    for (int candidate = port; candidate < port + 12; candidate++) {
-      try {
-        final HttpServer server = await shelf_io.serve(
-          pipeline,
-          InternetAddress.anyIPv4,
-          candidate,
-          shared: false,
-        );
-        server.autoCompress = true;
-        _httpServer = server;
-        _boundPort = candidate;
-        break;
-      } catch (error) {
-        lastError = error;
+  final Map<String, Peer> peers = {};
+  final void Function(String, String, Map<String, dynamic>, int) onAction;
+  final void Function() onRoster;
+  GameState? Function() state;
+  HostServer({
+    required this.hostId,
+    required this.hostName,
+    required this.pin,
+    required this.onAction,
+    required this.onRoster,
+    required this.state,
+    this.port = 7823,
+    String? session,
+  }) : session = session ?? const Uuid().v4();
+  Future<void> start() async {
+    server = await HttpServer.bind(InternetAddress.anyIPv4, port);
+    server!.listen((request) async {
+      if (!WebSocketTransformer.isUpgradeRequest(request)) {
+        request.response.statusCode = 404;
+        await request.response.close();
+        return;
       }
-    }
-
-    if (_httpServer == null) {
-      throw StateError(
-        'راه‌اندازی سرور ممکن نشد. پورت $port تا ${port + 11} در دسترس نیست. ($lastError)',
+      final address = request.connectionInfo?.remoteAddress.address ?? '';
+      final socket = await WebSocketTransformer.upgrade(request);
+      socket.pingInterval = const Duration(seconds: 10);
+      socket.add(
+        jsonEncode({'type': 'hello', 'session': session, 'hostId': hostId}),
       );
-    }
-
-    _running = true;
-    _heartbeat = Timer.periodic(heartbeatInterval, (_) => _tickHeartbeat());
-    return _boundPort;
-  }
-
-  void _accept(WebSocketChannel channel) {
-    final String id = 's${++_peerSeq}';
-    final _Peer peer = _Peer(id, channel);
-    _peers[id] = peer;
-
-    channel.stream.listen(
-      (dynamic data) {
-        peer.touch();
-        _handleRaw(id, data);
-      },
-      onDone: () => _dropPeer(id),
-      onError: (Object error) => _dropPeer(id),
-      cancelOnError: true,
-    );
-
-    send(id, WireMessage(WireMessage.info, <String, dynamic>{
-      'server': 'neon-bankroll',
-      'protocol': 1,
-      'port': _boundPort,
-    }));
-    onPeerConnected?.call(id);
-  }
-
-  void _handleRaw(String id, dynamic data) {
-    if (data is! String) {
-      return;
-    }
-    Map<String, dynamic> decoded;
-    try {
-      final dynamic raw = jsonDecode(data);
-      if (raw is! Map) {
-        return;
-      }
-      decoded = Map<String, dynamic>.from(raw);
-    } catch (_) {
-      return;
-    }
-    final WireMessage message = WireMessage.fromJson(decoded);
-    if (message.type == WireMessage.pong || message.type == WireMessage.ping) {
-      final _Peer? peer = _peers[id];
-      peer?.touch();
-      if (message.type == WireMessage.ping) {
-        send(id, WireMessage(WireMessage.pong, message.payload));
-      }
-      return;
-    }
-    onMessage(id, message);
-  }
-
-  void _tickHeartbeat() {
-    final DateTime now = DateTime.now();
-    final List<String> dead = <String>[];
-    _peers.forEach((String id, _Peer peer) {
-      if (now.difference(peer.lastSeen) > peerTimeout) {
-        dead.add(id);
-        return;
-      }
-      send(id, WireMessage(WireMessage.ping, <String, dynamic>{
-        'ts': now.millisecondsSinceEpoch,
-      }));
-    });
-    for (final String id in dead) {
-      _closePeer(id, reason: 'heartbeat timeout');
-    }
-  }
-
-  void _dropPeer(String id) {
-    final _Peer? peer = _peers.remove(id);
-    if (peer == null) {
-      return;
-    }
-    peer.closed = true;
-    onPeerDisconnected?.call(id);
-  }
-
-  void _closePeer(String id, {String reason = ''}) {
-    final _Peer? peer = _peers[id];
-    if (peer == null) {
-      return;
-    }
-    send(id, WireMessage(WireMessage.bye, <String, dynamic>{'reason': reason}));
-    try {
-      peer.channel.sink.close();
-    } catch (_) {
-      // Socket already gone; nothing to do.
-    }
-    _dropPeer(id);
-  }
-
-  /// Sends an envelope to a single peer.
-  void send(String socketId, WireMessage message) {
-    final _Peer? peer = _peers[socketId];
-    if (peer == null || peer.closed) {
-      return;
-    }
-    try {
-      peer.channel.sink.add(jsonEncode(message.toJson()));
-    } catch (_) {
-      _dropPeer(socketId);
-    }
-  }
-
-  /// Sends an envelope to every connected peer.
-  void broadcast(WireMessage message) {
-    final String encoded = jsonEncode(message.toJson());
-    final List<String> broken = <String>[];
-    _peers.forEach((String id, _Peer peer) {
-      if (peer.closed) {
-        return;
-      }
-      try {
-        peer.channel.sink.add(encoded);
-      } catch (_) {
-        broken.add(id);
-      }
-    });
-    for (final String id in broken) {
-      _dropPeer(id);
-    }
-  }
-
-  bool isConnected(String socketId) {
-    final _Peer? peer = _peers[socketId];
-    return peer != null && !peer.closed;
-  }
-
-  Future<void> stop() async {
-    _heartbeat?.cancel();
-    _heartbeat = null;
-    _running = false;
-    for (final String id in _peers.keys.toList(growable: false)) {
-      _closePeer(id, reason: 'server stopping');
-    }
-    _peers.clear();
-    await _httpServer?.close(force: true);
-    _httpServer = null;
-  }
-
-  /// Best-effort LAN IPv4 address used for the QR payload.
-  static Future<String?> findLocalIpv4() async {
-    try {
-      final List<NetworkInterface> interfaces = await NetworkInterface.list(
-        type: InternetAddressType.IPv4,
-        includeLoopback: false,
-        includeLinkLocal: false,
-      );
-      final List<String> addresses = <String>[];
-      for (final NetworkInterface interface in interfaces) {
-        for (final InternetAddress address in interface.addresses) {
-          if (address.type == InternetAddressType.IPv4) {
-            addresses.add(address.address);
+      String? peerId;
+      SecureProtocol? codec;
+      Future<void> queue = Future.value();
+      final authTimer = Timer(const Duration(seconds: 10), () {
+        if (peerId == null) socket.close(1008, 'Join timeout');
+      });
+      socket.listen(
+        (raw) {
+          queue = queue.then((_) async {
+            try {
+              if (raw is! String || raw.length > 2000000) {
+                throw const FormatException('Invalid frame');
+              }
+              if (peerId == null) {
+                final envelope = jsonDecode(raw) as Map<String, dynamic>;
+                final id = envelope['clientId'] as String;
+                if (id == hostId || !RegExp(r'^[a-f0-9-]{36}$').hasMatch(id)) {
+                  throw const FormatException('Invalid identity');
+                }
+                codec =
+                    peers[id]?.codec ??
+                    await SecureProtocol.derive(pin, session, id);
+                final j = await codec!.decode(envelope['join']);
+                if (j['type'] != 'join' || j['id'] != id) {
+                  throw const FormatException('Invalid join');
+                }
+                final existing = peers[id];
+                final now = DateTime.now().millisecondsSinceEpoch;
+                final knownPlayer =
+                    state()?.players.any(
+                      (p) => p.id == id && !p.bot && !p.eliminated,
+                    ) ??
+                    false;
+                if (existing == null &&
+                    (peers.length >= 5 || (state() != null && !knownPlayer))) {
+                  throw StateError('اتاق پر است یا بازی شروع شده');
+                }
+                if (existing != null &&
+                    existing.socket == null &&
+                    now - existing.lastSeen > 60000) {
+                  throw StateError('مهلت اتصال مجدد تمام شد');
+                }
+                if (existing != null && existing.socket != null) {
+                  throw StateError('این شناسه متصل است');
+                }
+                final name = (j['name'] as String).trim();
+                if (name.isEmpty || name.length > 24) {
+                  throw StateError('نام معتبر نیست');
+                }
+                peerId = id;
+                authTimer.cancel();
+                peers[id] = Peer(
+                  id,
+                  existing?.name ?? name,
+                  address,
+                  socket,
+                  codec!,
+                );
+                send(id, {'type': 'welcome', 'id': id, 'hostId': hostId});
+                onRoster();
+                await broadcast();
+                return;
+              }
+              final peer = peers[peerId]!;
+              final j = await codec!.decode(raw);
+              peer.lastSeen = DateTime.now().millisecondsSinceEpoch;
+              if (j['type'] == 'action') {
+                final s = state();
+                if (s == null) throw StateError('بازی آغاز نشده');
+                if (j['revision'] != s.revision &&
+                    j['action'] != 'bid' &&
+                    j['action'] != 'vote') {
+                  throw StateError('وضعیت تغییر کرده؛ دوباره تلاش کنید');
+                }
+                onAction(
+                  peer.id,
+                  j['action'],
+                  Map<String, dynamic>.from(j['data'] ?? {}),
+                  DateTime.now().millisecondsSinceEpoch,
+                );
+                await broadcast();
+              }
+              if (j['type'] == 'ping') send(peer.id, {'type': 'pong'});
+            } catch (e) {
+              if (peerId == null) {
+                socket.close(1008, 'Join refused');
+              } else {
+                send(peerId!, {
+                  'type': 'error',
+                  'message': e is StateError
+                      ? e.message
+                      : 'پیام نامعتبر یا تکراری',
+                });
+              }
+              GameLogger.event('network_reject');
+            }
+          });
+        },
+        onDone: () {
+          authTimer.cancel();
+          if (peerId != null && peers[peerId]?.socket == socket) {
+            peers[peerId]!.socket = null;
+            peers[peerId]!.lastSeen = DateTime.now().millisecondsSinceEpoch;
+            onRoster();
           }
+        },
+        onError: (Object e) {
+          socket.close();
+        },
+      );
+    });
+  }
+
+  List<Map<String, dynamic>> get roster => [
+    {'id': hostId, 'name': hostName, 'address': '', 'connected': true},
+    ...peers.values.map((p) => p.toJson()),
+  ];
+  String? get successor {
+    final live =
+        peers.values.where((p) => p.socket != null).map((p) => p.id).toList()
+          ..sort();
+    return live.isEmpty ? null : live.first;
+  }
+
+  void send(String id, Map<String, dynamic> value) {
+    final p = peers[id];
+    if (p?.socket == null) return;
+    p!.outgoing = p.outgoing
+        .then((_) async {
+          final encoded = await p.codec.encode(value);
+          p.socket?.add(encoded);
+        })
+        .catchError((Object e) {
+          GameLogger.event('send_failed');
+        });
+  }
+
+  Future<void> broadcast() async {
+    final s = state();
+    for (final p in peers.values.where((p) => p.socket != null)) {
+      send(p.id, {
+        'type': 'roster',
+        'players': roster,
+        'successor': successor,
+        'port': port,
+      });
+      if (s != null) {
+        send(p.id, {
+          'type': 'snapshot',
+          'snapshot': Snapshot.encode(s, viewer: p.id),
+        });
+        if (p.id == successor) {
+          send(p.id, {
+            'type': 'backup',
+            'snapshot': Snapshot.encode(s, migration: true),
+            'peers': roster,
+          });
         }
       }
-      if (addresses.isEmpty) {
-        return null;
-      }
-      for (final String address in addresses) {
-        if (address.startsWith('192.168.') ||
-            address.startsWith('10.') ||
-            address.startsWith('172.')) {
-          return address;
-        }
-      }
-      return addresses.first;
-    } catch (_) {
-      return null;
     }
+  }
+
+  Future<void> dispose() async {
+    for (final p in peers.values) {
+      await p.socket?.close();
+    }
+    await server?.close(force: true);
   }
 }

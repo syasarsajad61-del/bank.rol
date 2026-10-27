@@ -1,0 +1,1087 @@
+═══════════════════════════════════════════════════════════════════════
+MASTER PROMPT — BANKROLL PLATO+ — v4.0 (Light Theme + Serpentine Layout)
+CHECKSUM: 143 IDS
+(R27 + G10 + M13 + B10 + T9 + A8 + F7 + AS20 + OUT4 + INSTR8 + BL12 + TH15)
+═══════════════════════════════════════════════════════════════════════
+
+⛔ IDENTITY-LOCK
+تو «Principal Flutter Game Architect + Senior Game Designer + Art Director»
+هستی. مأموریت: ساخت کامل پروژه Flutter «بانک‌رول پلاتو+» به‌صورت یک
+ریپازیتوری قابل build. خودت همه فایل‌ها، کدها، ASSET های گرافیکی (با
+تولید تصویر)، asset های صوتی و تست‌ها را می‌سازی. کاربر فقط APK می‌گیرد.
+تم: محله‌های یک شهر ایرانی (زاهدان) — روشن، زنده، دوستانه.
+
+🎯 OUTCOME-LOCK
+خروجی باید بدون خطا با این دستور build شود:
+  flutter pub get && flutter build apk --release
+بدون TODO، بدون stub، بدون placeholder، بدون فایل ناقص.
+
+🛑 ZERO-MISS-LOCK
+این پرامپت ۱۴۳ شناسه دارد. همه باید پیاده شوند. قبل از «تمام شد» ماتریس
+SELF-CHECK را پر کن. تیک خالی = کار تمام نیست. برگرد و تکمیل کن.
+
+🚫 ANTI-LAZY-LOCK (نقض = بازنویسی اجباری)
+الگوهای زیر مطلقاً ممنوع است. اگر یکی را نوشتی، همان فایل را از صفر
+دوباره بنویس:
+  ❌ // ... rest of code           ❌ // same as above
+  ❌ // similar to previous         ❌ // TODO: implement
+  ❌ // implement later             ❌ // handle this case
+  ❌ [کد کامل در پیام بعدی]         ❌ [بقیهٔ فایل مشابه است]
+  ❌ «...» داخل کد                  ❌ تابع بدون بدنه
+  ❌ کلاس بدون متدهای ضروری          ❌ import ناقص
+  ❌ فایل با «بخش ۱ از ۲» که بخش ۲ هرگز نیاید
+
+📏 LENGTH-COMMIT
+فایل‌های SECTION 10، 11، 12 را دقیقاً با همان محتوا کپی کن. حتی یک
+کاراکتر کم یا زیاد نه. تغییر = نقض INSTR07.
+
+🎨 IMAGE-GEN-LOCK
+تو قابلیت تولید تصویر داری. برای همهٔ ۲۰ asset بصری در SECTION 13
+از این قابلیت استفاده کن. هیچ asset با placeholder جایگزین نشود.
+هر تصویر باید در `assets/ASSET_GUIDE.md` ثبت شود.
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 0 — MASTER CHECKLIST (143 IDS)
+═══════════════════════════════════════════════════════════════════════
+
+R:01..27 = 27    G:01..10 = 10    M:01..13 = 13    B:01..10 = 10
+T:01..09 = 9     A:01..08 = 8     F:01..07 = 7     AS:01..20 = 20
+OUT:01..04 = 4   INSTR:01..08 = 8  BL:01..12 = 12   TH:01..15 = 15
+─── جمع: 143 ───
+
+در پایان پاسخ باید بنویسی: ✅ CHECKSUM: X/143
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 1 — قوانین R01..R27 (LOCKED)
+═══════════════════════════════════════════════════════════════════════
+
+R01 بازیکن ۲-۶ — تک‌نفره = ۱ انسان + ۱..۵ ربات
+R02 هدف دارایی خالص: $3000 / $5000 / $7000
+R03 سقف راند: ۳۰ / ۵۰ / نامحدود
+R04 پایان: رسیدن به هدف | حذف همه جز ۱ | اتمام راند
+R05 ترتیب شروع: تصادفی
+R06 پول شروع: [1500,1600,1700,1800,1900,2000]
+R07 بانک مشترک Seed: $300
+R08 حرکت: ۱ تاس، ۶ = مجدد (۲ بار ماکس، ۶ سوم = زندان)
+R09 عبور شروع: $200 × ضریب فاز
+R10 ملک: محله (بلوک هم‌رنگ) + عمومی (پایانه/فرودگاه/بازار مرزی)
+R11 اجاره محله: بلوک کامل ×2.0
+R12 اجاره عمومی: پایه × تعداد owned
+R13 ساختمان: بلوک کامل، ماکس ۳، هزینه = پایه × فاز × (۱+تورم)
+R14 فروش ملک ۸۰٪، ساختمان ۶۰٪
+R15 زندان: ۳ نوبت یا $150
+R16 شانس: تصادفی، بیمه ۵۰٪ کاهش
+R17 ورشکستگی: دارایی خالص ≤۰ یا نقد <−$500
+R18 حذف غیرفعال: ۳ نوبت بدون حرکت
+R19 فاز اقتصادی هر ۴ راند (جزئیات SECTION 9)
+R20 حراج بلوف: تایمر ۱۰ث، پیشنهاد مخفی، ۱۰٪→بانک، ۵٪→تریگر
+R21 بانک مشترک رأی هر ۴ راند: وام گروهی/تقسیم/ذخیره، اکثریتی
+R22 تورم: clamp((کل÷شروع)−۱,−۰.۳,+۰.۴)×۰.۵
+R23 قرارداد محرمانه: عدم تعرض/تقسیم اجاره/خبرچین، شکستن $400+اعتبار−۱۵
+R24 اعتبار ۰-۱۰۰ + وام + ضامن/وثیقه + نکول (SECTION 9)
+R25 قانون‌گذاری هر ۴ راند: ۳→۲، اکثریتی، تساوی=بی‌اثر
+R26 بیمه: ۱۰٪ ارزش، ۳ راند، کاهش ۵۰٪، ماکس ۲
+R27 فرمول LOCKED:
+    rent = base × phaseMult × (1+inflation) × blockMult
+           × publicMult × insuranceMult × lawMult × buildingMult
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 2 — گرافیک G01..G10 (LOCKED)
+═══════════════════════════════════════════════════════════════════════
+
+G01 بورس زنده: تیکر افقی متحرک بالای صفحه + rolling digits + رنگ با فاز
+    → lib/graphics/live_ticker.dart
+G02 شهر کاغذی: papercraft texture برای کارت‌ها + انیمیشن تاکردن
+    → lib/graphics/paper_city.dart
+G03 قرارداد سیاه: مهر-موم + خط قرمز فقط بین دو طرف + لرزش شکستن
+    → lib/graphics/secret_contract_layer.dart
+G04 دو-رو: دو تم رنگی رونق/رکود که روی تم روشن پایه سوار می‌شوند
+    (رونق: سبز/طلایی، رکود: نارنجی/خاکستری) + crossfade ۲ث
+    → lib/graphics/dual_theme.dart + theme_bull.dart + theme_bear.dart
+G05 مهره زنده: آواتار با ۵ حالت (عادی/پولدار/ورشکسته/زندانی/خوشحال)
+    → lib/graphics/living_avatar.dart
+G06 نقشه محله‌ها: نمای مارپیچ S-شکل (SECTION 19) — نه دوره‌ای!
+    ساختمان‌های مینی‌ایزومتریک کنار مسیر + پرواز سکه
+    → lib/graphics/serpentine_board.dart
+G07 سکه فیزیکی: particle همه تراکنش‌ها + استخر طلایی بانک + دسته پول فنری
+    → lib/graphics/coin_particles.dart
+G08 داشبورد کارت‌محور: کارت‌های ملک به سبک دست پوکر در پایین صفحه
+    → lib/graphics/card_dashboard.dart
+G09 رنگ هویت: ۶ هویت (آبی/مورب، قرمز/نقطه، سبز/خط، بنفش/شطرنجی،
+    نارنجی/موج، صورتی/ستاره) + حاشیه ملک با رنگ مالک
+    → lib/graphics/identity_theme.dart
+G10 دوربین کارگردان: زوم سینمایی روی رویدادهای مهم
+    → lib/graphics/director_camera.dart
+
+G-LOCK: هر ۱۰ اجباری. G06 مخصوصاً باید چیدمان مارپیچ SECTION 19 را
+پیاده کند، نه چیدمان دوره‌ای (perimeter). اگر کتابخانه محدود بود،
+با CustomPaint نسخهٔ بومی بساز.
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 3 — شبکه M01..M13 (LOCKED)
+═══════════════════════════════════════════════════════════════════════
+
+M01 Host-Authoritative
+M02 Android LocalOnlyHotspot API
+M03 mDNS یا UDP broadcast برای discovery
+M04 WebSocket روی TCP + JSON
+M05 پورت 7823 (قابل تنظیم)
+M06 Max ۶ (۱ هاست + ۵ کلاینت)
+M07 UUID + کلید مشتق per session
+M08 State فقط روی هاست
+M09 حراج/قرارداد فقط به هاست
+M10 Snapshot هر پایان نوبت
+M11 Reconnect تا ۶۰ث
+M12 Host migration با آخرین snapshot
+M13 تایمرها سمت هاست
+فایل‌ها: lib/network/{host_server, client_connection, discovery, protocol,
+         message_types, snapshot}.dart
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 4 — ربات B01..B10 (LOCKED)
+═══════════════════════════════════════════════════════════════════════
+
+B01 ۳ سطح: آسان/متوسط/سخت
+B02 آسان: خرید تصادفی، حراج حداقلی، بدون قرارداد
+B03 متوسط: ROI، حراج منطقی، قرارداد ساده
+B04 سخت: بلوک‌سازی، بلوف، قرارداد پیچیده، مدیریت اعتبار
+B05 شخصیت: محافظه‌کار/تهاجمی/متعادل
+B06 پیشنهاد حراج هوشمند
+B07 قرارداد پیشنهاد/شکستن
+B08 وام و بازپرداخت
+B09 رأی قانون‌گذاری
+B10 استفاده از API انسانی
+فایل‌ها: lib/ai/{bot_controller, bot_easy, bot_medium, bot_hard, personality}.dart
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 5 — فنی T01..T09 (LOCKED)
+═══════════════════════════════════════════════════════════════════════
+
+T01 Flutter stable + Dart 3
+T02 minSdk 24 / targetSdk 34 / compileSdk 34
+T03 بسته‌ها: provider, web_socket_channel, rive, lottie, shared_preferences,
+    sqflite, uuid, crypto, path, path_provider, audioplayers, collection,
+    google_fonts (برای Vazirmatn)
+T04 WebSocket + JSON
+T05 SQLite + SharedPreferences
+T06 درخت فایل (SECTION 8)
+T07 Unit test برای R19-R27 و B
+T08 لاگ ساختاریافته
+T09 ۱۰۰٪ آفلاین، بدون API خارجی (google_fonts آفلاین با cache)
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 6 — ضدتقلب A01..A08 (LOCKED)
+═══════════════════════════════════════════════════════════════════════
+
+A01 محاسبات روی هاست
+A02 رمزنگاری payload حساس با کلید مشتق JOIN
+A03 nonce + timestamp در هر پیام
+A04 UUID یکتا per session
+A05 حراج فقط به هاست
+A06 قرارداد محرمانه فقط به هاست
+A07 snapshot هر نوبت
+A08 timeout + reconnect ۶۰ث
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 7 — ساخت F01..F07 (LOCKED)
+═══════════════════════════════════════════════════════════════════════
+
+F01 main.dart بدون خطا
+F02 pubspec.yaml با dependencies و assets
+F03 AndroidManifest: INTERNET, ACCESS_WIFI_STATE, CHANGE_WIFI_STATE,
+    ACCESS_NETWORK_STATE, NEARBY_WIFI_DEVICES, ACCESS_FINE_LOCATION,
+    ACCESS_COARSE_LOCATION
+F04 build.gradle minSdk/targetSdk
+F05 هر ۱۰ گرافیک به ویجت وصل
+F06 README.md کامل (نصب/build/استفاده)
+F07 تست‌ها پاس
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 8 — درخت فایل کامل (همه باید ساخته شوند)
+═══════════════════════════════════════════════════════════════════════
+
+bankroll_plato/
+├── pubspec.yaml  .gitignore  README.md  analysis_options.yaml
+├── android/app/src/main/AndroidManifest.xml
+├── android/app/build.gradle  android/build.gradle
+├── android/settings.gradle  android/gradle.properties
+├── android/app/src/main/kotlin/.../MainActivity.kt
+├── android/app/src/main/res/values/{colors,styles,strings}.xml
+├── android/app/src/main/res/mipmap-*/ic_launcher.png (۵ ابعاد)
+├── assets/images/  assets/animations/  assets/sounds/
+├── assets/ASSET_GUIDE.md
+├── lib/main.dart  lib/app.dart
+├── lib/core/theme/
+│   app_theme, colors, typography, dimensions, shadows
+├── lib/core/models/{player, property, city_property, public_property,
+│   building, contract, loan, auction, insurance, economic_phase, law,
+│   chance_card, game_state, vote, snapshot_state, board_path_point}.dart
+├── lib/core/rules/{rent_calculator, inflation, phase_engine, credit_system,
+│   contract_engine, auction_engine, common_bank, law_engine,
+│   insurance_engine, bankruptcy, turn_manager, dice_engine,
+│   jail_engine, chance_engine, path_calculator}.dart
+├── lib/core/data/{properties_data, chance_cards_data, laws_data,
+│   board_path_data}.dart
+├── lib/core/utils/{logger, extensions, responsive}.dart
+├── lib/network/{host_server, client_connection, discovery, protocol,
+│   message_types, snapshot}.dart
+├── lib/ai/{bot_controller, bot_easy, bot_medium, bot_hard, personality}.dart
+├── lib/graphics/{live_ticker, paper_city, secret_contract_layer,
+│   dual_theme, theme_bull, theme_bear, living_avatar, serpentine_board,
+│   neighborhood_background, path_painter, coin_particles, card_dashboard,
+│   identity_theme, director_camera}.dart
+├── lib/ui/screens/{splash, main_menu, game_setup, host_lobby, join_lobby,
+│   game_board, auction, contract, vote, loan, end_game}.dart
+├── lib/ui/widgets/{player_profile_card, property_card, dice_widget,
+│   phase_indicator, inflation_meter, common_bank_pool, action_button,
+│   bid_input, timer_widget, center_hud, bottom_dock, top_ticker_bar,
+│   space_widget, path_progress_bar}.dart
+├── lib/providers/{game_provider, network_provider, settings_provider,
+│   theme_provider}.dart
+└── test/{rent_calculator_test, inflation_test, auction_test, credit_test,
+    bot_test, phase_test, board_test, path_test, theme_test}.dart
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 9 — اعداد مرجع LOCKED
+═══════════════════════════════════════════════════════════════════════
+
+[فازها R19]
+ثبات: rent×1.0 buy×1.0  بهره 15%  حقوق $200
+رونق: rent×1.4 buy×1.15 بهره 10%  حقوق $250
+رکود: rent×0.7 buy×0.9  بهره 20%  حقوق $150
+
+[مارکوف R19]
+ثبات→40%رونق,40%ثبات,20%رکود
+رونق→50%ثبات,30%رکود,20%رونق
+رکود→50%ثبات,30%رونق,20%رکود
+
+[تورم R22]
+rate = clamp((totalMoney/initialMoney - 1), -0.3, 0.4) * 0.5
+
+[حراج R20] timer=10s، ۱۰٪→bank، ۵٪→triggerer
+[قرارداد R23] break=$400، credit−15
+[اعتبار R24] 80+→$1000، 50-79→$500، 20-49→$200، <20→reject
+  repay 5 rounds، default −20، no-default +2 (cap 100)
+[بیمه R26] premium 10%، 3 rounds، reduce 50%، max 2
+[ساختمان R13] max 3 per city، sale 60%
+[فروش ملک R14] 80% of current value
+[ورشکستگی R17] networth ≤ 0 OR cash < −500
+
+[ضریب ساختمان R13] level0:×1.0 level1:×3.0 level2:×5.0 level3:×8.0
+[ضریب بلوک R11] ×2.0
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 10 — فایل properties_data.dart (دقیقاً کپی کن)
+═══════════════════════════════════════════════════════════════════════
+
+===BEGIN-FILE lib/core/data/properties_data.dart===
+// [R10][R11][R12][R13][R16][R25][T06] properties_data.dart
+// محله‌های ایرانی — زاهدان
+import '../models/city_property.dart';
+import '../models/public_property.dart';
+
+enum PropertyColor { turquoise, pink, orange, red, yellow, green }
+
+class CityPropertyData {
+  final String id;
+  final String name;
+  final String nameEn;
+  final int price;
+  final int baseRent;
+  final int buildingCost;
+  final PropertyColor block;
+  const CityPropertyData({
+    required this.id, required this.name, required this.nameEn,
+    required this.price, required this.baseRent,
+    required this.buildingCost, required this.block,
+  });
+}
+
+class PublicPropertyData {
+  final String id;
+  final String name;
+  final String nameEn;
+  final int price;
+  final int baseRent;
+  const PublicPropertyData({
+    required this.id, required this.name, required this.nameEn,
+    required this.price, required this.baseRent,
+  });
+}
+
+// ۱۵ محله — ۶ بلوک رنگی
+const List<CityPropertyData> CITY_PROPERTIES = [
+  // بلوک فیروزه‌ای — ارزان (سطح ۱)
+  CityPropertyData(id: 'n_bozorgmehr', name: 'بزرگمهر', nameEn: 'Bozorgmehr',
+    price: 60, baseRent: 4, buildingCost: 50, block: PropertyColor.turquoise),
+  CityPropertyData(id: 'n_daneshju', name: 'دانشجو', nameEn: 'Daneshju',
+    price: 60, baseRent: 4, buildingCost: 50, block: PropertyColor.turquoise),
+
+  // بلوک صورتی — متوسط پایین (سطح ۲)
+  CityPropertyData(id: 'n_kambuzia', name: 'کامبوزیا', nameEn: 'Kambuzia',
+    price: 100, baseRent: 6, buildingCost: 50, block: PropertyColor.pink),
+  CityPropertyData(id: 'n_zibashahr', name: 'زیباشهر', nameEn: 'Zibashahr',
+    price: 100, baseRent: 6, buildingCost: 50, block: PropertyColor.pink),
+  CityPropertyData(id: 'n_daneshgah', name: 'دانشگاه', nameEn: 'Daneshgah',
+    price: 120, baseRent: 8, buildingCost: 60, block: PropertyColor.pink),
+
+  // بلوک نارنجی — متوسط (سطح ۳)
+  CityPropertyData(id: 'n_shirabad', name: 'شیرآباد', nameEn: 'Shirabad',
+    price: 140, baseRent: 10, buildingCost: 70, block: PropertyColor.orange),
+  CityPropertyData(id: 'n_karimabad', name: 'کریم‌آباد', nameEn: 'Karimabad',
+    price: 140, baseRent: 10, buildingCost: 70, block: PropertyColor.orange),
+  CityPropertyData(id: 'n_looriabad', name: 'لوری‌آباد', nameEn: 'Looriabad',
+    price: 160, baseRent: 12, buildingCost: 80, block: PropertyColor.orange),
+
+  // بلوک قرمز — متوسط بالا (سطح ۴)
+  CityPropertyData(id: 'n_tehran', name: 'خیابان تهران', nameEn: 'Tehran St.',
+    price: 180, baseRent: 14, buildingCost: 90, block: PropertyColor.red),
+  CityPropertyData(id: 'n_bazaar', name: 'بازار بزرگ', nameEn: 'Grand Bazaar',
+    price: 180, baseRent: 14, buildingCost: 90, block: PropertyColor.red),
+  CityPropertyData(id: 'n_milad', name: 'شهرک میلاد', nameEn: 'Milad Town',
+    price: 200, baseRent: 16, buildingCost: 100, block: PropertyColor.red),
+
+  // بلوک زرد — بالا (سطح ۵)
+  CityPropertyData(id: 'n_imamhossein', name: 'میدان امام حسین',
+    nameEn: 'Imam Hossein Sq.', price: 220, baseRent: 18,
+    buildingCost: 110, block: PropertyColor.yellow),
+  CityPropertyData(id: 'n_ferdowsi', name: 'خیابان فردوسی',
+    nameEn: 'Ferdowsi St.', price: 240, baseRent: 20,
+    buildingCost: 120, block: PropertyColor.yellow),
+
+  // بلوک سبز — خیلی بالا (سطح ۶)
+  CityPropertyData(id: 'n_ghods', name: 'شهرک قدس', nameEn: 'Ghods Town',
+    price: 280, baseRent: 22, buildingCost: 130, block: PropertyColor.green),
+  CityPropertyData(id: 'n_khorramshahr', name: 'بلوار خرمشهر',
+    nameEn: 'Khorramshahr Blvd', price: 300, baseRent: 25,
+    buildingCost: 150, block: PropertyColor.green),
+];
+
+// ۳ ملک عمومی
+const List<PublicPropertyData> PUBLIC_PROPERTIES = [
+  PublicPropertyData(id: 'p_terminal', name: 'پایانهٔ مسافربری',
+    nameEn: 'Bus Terminal', price: 180, baseRent: 20),
+  PublicPropertyData(id: 'p_airport', name: 'فرودگاه زاهدان',
+    nameEn: 'Zahedan Airport', price: 200, baseRent: 25),
+  PublicPropertyData(id: 'p_border', name: 'بازار مرزی میرجاوه',
+    nameEn: 'Mirjaveh Border Market', price: 220, baseRent: 30),
+];
+
+enum BoardSpaceType {
+  start, city, publicProperty, chance, tax, auction,
+  jail, goToJail, freeParking, bankPool,
+}
+
+class BoardSpace {
+  final int index;
+  final BoardSpaceType type;
+  final String? propertyId;
+  final int? taxAmount;
+  final int? bonusAmount;
+  const BoardSpace({
+    required this.index, required this.type,
+    this.propertyId, this.taxAmount, this.bonusAmount,
+  });
+}
+
+const int BOARD_SIZE = 32;
+
+const List<BoardSpace> BOARD = [
+  BoardSpace(index: 0, type: BoardSpaceType.start),
+  BoardSpace(index: 1, type: BoardSpaceType.city, propertyId: 'n_bozorgmehr'),
+  BoardSpace(index: 2, type: BoardSpaceType.city, propertyId: 'n_daneshju'),
+  BoardSpace(index: 3, type: BoardSpaceType.chance),
+  BoardSpace(index: 4, type: BoardSpaceType.publicProperty, propertyId: 'p_terminal'),
+  BoardSpace(index: 5, type: BoardSpaceType.tax, taxAmount: 100),
+  BoardSpace(index: 6, type: BoardSpaceType.city, propertyId: 'n_kambuzia'),
+  BoardSpace(index: 7, type: BoardSpaceType.city, propertyId: 'n_zibashahr'),
+  BoardSpace(index: 8, type: BoardSpaceType.jail),
+  BoardSpace(index: 9, type: BoardSpaceType.city, propertyId: 'n_daneshgah'),
+  BoardSpace(index: 10, type: BoardSpaceType.publicProperty, propertyId: 'p_airport'),
+  BoardSpace(index: 11, type: BoardSpaceType.auction),
+  BoardSpace(index: 12, type: BoardSpaceType.city, propertyId: 'n_shirabad'),
+  BoardSpace(index: 13, type: BoardSpaceType.chance),
+  BoardSpace(index: 14, type: BoardSpaceType.city, propertyId: 'n_karimabad'),
+  BoardSpace(index: 15, type: BoardSpaceType.city, propertyId: 'n_looriabad'),
+  BoardSpace(index: 16, type: BoardSpaceType.freeParking, bonusAmount: 150),
+  BoardSpace(index: 17, type: BoardSpaceType.city, propertyId: 'n_tehran'),
+  BoardSpace(index: 18, type: BoardSpaceType.city, propertyId: 'n_bazaar'),
+  BoardSpace(index: 19, type: BoardSpaceType.chance),
+  BoardSpace(index: 20, type: BoardSpaceType.publicProperty, propertyId: 'p_border'),
+  BoardSpace(index: 21, type: BoardSpaceType.city, propertyId: 'n_milad'),
+  BoardSpace(index: 22, type: BoardSpaceType.auction),
+  BoardSpace(index: 23, type: BoardSpaceType.city, propertyId: 'n_imamhossein'),
+  BoardSpace(index: 24, type: BoardSpaceType.goToJail),
+  BoardSpace(index: 25, type: BoardSpaceType.city, propertyId: 'n_ferdowsi'),
+  BoardSpace(index: 26, type: BoardSpaceType.chance),
+  BoardSpace(index: 27, type: BoardSpaceType.city, propertyId: 'n_ghods'),
+  BoardSpace(index: 28, type: BoardSpaceType.tax, taxAmount: 150),
+  BoardSpace(index: 29, type: BoardSpaceType.city, propertyId: 'n_khorramshahr'),
+  BoardSpace(index: 30, type: BoardSpaceType.bankPool),
+  BoardSpace(index: 31, type: BoardSpaceType.tax, taxAmount: 50),
+];
+
+const Map<int, double> BUILDING_RENT_MULTIPLIER = {
+  0: 1.0, 1: 3.0, 2: 5.0, 3: 8.0,
+};
+const double BLOCK_BONUS_MULTIPLIER = 2.0;
+===END-FILE===
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 11 — فایل chance_cards_data.dart (دقیقاً کپی کن)
+═══════════════════════════════════════════════════════════════════════
+
+===BEGIN-FILE lib/core/data/chance_cards_data.dart===
+// [R16][T06] chance_cards_data.dart
+import '../models/chance_card.dart';
+
+enum ChanceEffect {
+  moneyFromBank, moneyFromPlayers, discountNextProperty,
+  moneyFromBankPool, moveToStart, payBankPool, payPlayers,
+  loseBuilding, goToJail, loseCredit, moveToAnywhere,
+  moveToNextChance, moveToLastBought, gainUnownedProperty, swapPosition,
+}
+
+class ChanceCardData {
+  final String id;
+  final String title;
+  final String description;
+  final ChanceEffect effect;
+  final int? amount;
+  final bool positive;
+  const ChanceCardData({
+    required this.id, required this.title, required this.description,
+    required this.effect, this.amount, required this.positive,
+  });
+}
+
+const List<ChanceCardData> CHANCE_CARDS = [
+  ChanceCardData(id: 'cc_01', title: 'سود سهام',
+    description: 'از بانک ۱۵۰ دلار دریافت کنید',
+    effect: ChanceEffect.moneyFromBank, amount: 150, positive: true),
+  ChanceCardData(id: 'cc_02', title: 'کمک دوستان',
+    description: 'از هر بازیکن ۵۰ دلار دریافت کنید',
+    effect: ChanceEffect.moneyFromPlayers, amount: 50, positive: true),
+  ChanceCardData(id: 'cc_03', title: 'تخفیف ویژه',
+    description: 'خرید ملک بعدی ۵۰٪ تخفیف',
+    effect: ChanceEffect.discountNextProperty, positive: true),
+  ChanceCardData(id: 'cc_04', title: 'سود بانک مشترک',
+    description: 'از بانک مشترک ۱۰۰ دلار دریافت کنید',
+    effect: ChanceEffect.moneyFromBankPool, amount: 100, positive: true),
+  ChanceCardData(id: 'cc_05', title: 'حقوق ماهانه',
+    description: 'به خانه شروع بروید و حقوق بگیرید',
+    effect: ChanceEffect.moveToStart, positive: true),
+  ChanceCardData(id: 'cc_06', title: 'مالیات سنگین',
+    description: '۲۰۰ دلار به بانک مشترک بپردازید',
+    effect: ChanceEffect.payBankPool, amount: 200, positive: false),
+  ChanceCardData(id: 'cc_07', title: 'مهمانی',
+    description: 'به هر بازیکن ۱۰۰ دلار بپردازید',
+    effect: ChanceEffect.payPlayers, amount: 100, positive: false),
+  ChanceCardData(id: 'cc_08', title: 'آتش‌سوزی',
+    description: 'یک ساختمان تصادفی از دست می‌دهید',
+    effect: ChanceEffect.loseBuilding, positive: false),
+  ChanceCardData(id: 'cc_09', title: 'زندانی شدید',
+    description: 'به زندان بروید (۳ نوبت)',
+    effect: ChanceEffect.goToJail, positive: false),
+  ChanceCardData(id: 'cc_10', title: 'افت اعتبار',
+    description: 'اعتبار شما ۱۰ واحد کاهش می‌یابد',
+    effect: ChanceEffect.loseCredit, amount: 10, positive: false),
+  ChanceCardData(id: 'cc_11', title: 'آزادی مطلق',
+    description: 'به هر خانه‌ای که می‌خواهید بروید',
+    effect: ChanceEffect.moveToAnywhere, positive: true),
+  ChanceCardData(id: 'cc_12', title: 'خانهٔ شانس بعدی',
+    description: 'به نزدیک‌ترین خانهٔ شانس بروید',
+    effect: ChanceEffect.moveToNextChance, positive: true),
+  ChanceCardData(id: 'cc_13', title: 'بازداشت اشتباهی',
+    description: 'به زندان بروید (۳ نوبت)',
+    effect: ChanceEffect.goToJail, positive: false),
+  ChanceCardData(id: 'cc_14', title: 'سرکشی به دارایی',
+    description: 'به آخرین ملک خریداری‌شده بروید',
+    effect: ChanceEffect.moveToLastBought, positive: true),
+  ChanceCardData(id: 'cc_15', title: 'مالکیت رایگان',
+    description: 'یک ملک بی‌صاحب تصادفی رایگان بگیرید',
+    effect: ChanceEffect.gainUnownedProperty, positive: true),
+  ChanceCardData(id: 'cc_16', title: 'تبادل مهره',
+    description: 'جای مهره با بازیکن تصادفی عوض شود',
+    effect: ChanceEffect.swapPosition, positive: false),
+];
+===END-FILE===
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 12 — فایل laws_data.dart (دقیقاً کپی کن)
+═══════════════════════════════════════════════════════════════════════
+
+===BEGIN-FILE lib/core/data/laws_data.dart===
+// [R25][T06] laws_data.dart
+import '../models/law.dart';
+
+enum LawEffect {
+  increaseRent, taxHighRent, increaseSalary, reduceJail,
+  increaseBuildingCost, helpPoorest, reduceBuildingCap,
+  taxTrade, doublePublicRent, reduceInsurance,
+}
+
+class LawData {
+  final String id;
+  final String title;
+  final String description;
+  final LawEffect effect;
+  final double? value;
+  const LawData({
+    required this.id, required this.title, required this.description,
+    required this.effect, this.value,
+  });
+}
+
+const List<LawData> LAWS = [
+  LawData(id: 'law_01', title: 'اجاره‌های بالاتر',
+    description: 'اجاره‌ها ۲۰٪ افزایش',
+    effect: LawEffect.increaseRent, value: 0.20),
+  LawData(id: 'law_02', title: 'مالیات بر اجاره‌های کلان',
+    description: 'اجاره بالای ۳۰۰ دلار، ۱۰٪ به بانک مشترک',
+    effect: LawEffect.taxHighRent, value: 0.10),
+  LawData(id: 'law_03', title: 'افزایش حقوق',
+    description: 'حقوق عبور از شروع ۲۵۰ دلار',
+    effect: LawEffect.increaseSalary, value: 250),
+  LawData(id: 'law_04', title: 'زندان کوتاه',
+    description: 'زندان فقط ۱ نوبت',
+    effect: LawEffect.reduceJail, value: 1),
+  LawData(id: 'law_05', title: 'گرانی ساخت',
+    description: 'خرید ساختمان ۳۰٪ گران‌تر',
+    effect: LawEffect.increaseBuildingCost, value: 0.30),
+  LawData(id: 'law_06', title: 'کمک به کم‌درآمد',
+    description: 'کم‌درآمدترین بازیکن ۳۰۰ دلار از بانک مرکزی',
+    effect: LawEffect.helpPoorest, value: 300),
+  LawData(id: 'law_07', title: 'سقف ساخت کمتر',
+    description: 'حداکثر ۲ ساختمان',
+    effect: LawEffect.reduceBuildingCap, value: 2),
+  LawData(id: 'law_08', title: 'مالیات معاوضه',
+    description: 'هر معاوضه ۵٪ به بانک مشترک',
+    effect: LawEffect.taxTrade, value: 0.05),
+  LawData(id: 'law_09', title: 'اجارهٔ عمومی دو برابر',
+    description: 'اجارهٔ املاک عمومی ×۲ به‌جای ×تعداد',
+    effect: LawEffect.doublePublicRent, value: 2),
+  LawData(id: 'law_10', title: 'بیمهٔ ارزان',
+    description: 'حق بیمه ۵۰٪ ارزان‌تر',
+    effect: LawEffect.reduceInsurance, value: 0.50),
+];
+===END-FILE===
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 13 — ASSET GENERATION (تولید تصویر — ۲۰ asset)
+═══════════════════════════════════════════════════════════════════════
+
+🎨 تو قابلیت تولید تصویر داری. برای همه ۲۰ asset بصری از این قابلیت
+استفاده کن. هیچ asset با placeholder یا CustomPaint ساده جایگزین نشود.
+
+📐 STYLE BIBLE (اجباری — همه تصاویر با این مشخصات)
+────────────────────────────────────────────────────
+
+[ART-01] سبک کلی: «modern flat illustration + soft 3D shading»
+         تصویرسازی تخت مدرن با سایه‌های ملایم. حس: دوستانه، زنده،
+         قابل اعتماد، ایرانی-مدرن. نور روشن و شاد.
+
+[ART-02] پالت اصلی (تم روشن):
+         - Background base: #FAF6EE (کرم روشن)
+         - Card surface: #FFFFFF
+         - Primary: #1E3A5F (سرمه‌ای — متن و آیکون)
+         - Secondary: #D4AF37 (طلایی سکه)
+         - Accent-1: #27AE60 (سبز رونق)
+         - Accent-2: #E74C3C (قرمز رکود/هشدار)
+         - Accent-3: #F39C12 (نارنجی — گاهی)
+         - Neutral-warm: #F5F0E8
+         - Neutral-cool: #E8EEF2
+
+[ART-03] پالت بلوک‌های محله:
+         turquoise: #1ABC9C — pink: #E91E63 — orange: #FF9800
+         red: #C0392B — yellow: #F1C40F — green: #27AE60
+
+[ART-04] نورپردازی: منبع نور بالا-چپ، سایه‌های نرم ۱۰٪ شفافیت رنگی
+         (رنگ سایه = rgba(30,58,95,0.08) نه سیاه). هیچ سایه تیره.
+
+[ART-05] ابعاد: توان ۲ (۲۵۶، ۵۱۲، ۱۰۲۴). فرمت PNG شفاف برای UI، JPG
+         برای پس‌زمینه‌ها.
+
+[ART-06] هیچ متنی در تصویر ننویس. استثنا: dots تاس و monogram مهر.
+
+[ART-07] هیچ المان مذهبی/سیاسی/توهین‌آمیز. تم شهری، اقتصادی، دوستانه.
+
+[ART-08] ثبات سبک: اگر یک تصویر تخت است، همه تخت. مخلوط سبک ممنوع.
+
+[ART-09] همه تصاویر در ASSET_GUIDE.md با prompt و تاریخ ثبت شوند.
+
+[ART-10] تناسب با تم روشن: هیچ پس‌زمینه تیره، سیاه یا moody. همه شاد
+         و روشن.
+
+═══════════════════════════════════════════════════════════════════════
+📦 لیست کامل assets با prompt تولید تصویر
+═══════════════════════════════════════════════════════════════════════
+
+[AS01] assets/images/card_back.png — 512×768 PNG شفاف
+  prompt: "A luxurious playing card back, cream (#FAF6EE) background,
+  ornate golden (#D4AF37) geometric pattern inspired by Persian
+  tilework, a central red wax seal with monogram 'B', flat modern
+  illustration, soft 3D shading, top-left light source, bright
+  cheerful palette, no text, transparent outside card rectangle,
+  premium board game aesthetic"
+  استفاده: پشت کارت قرارداد + حراج
+
+[AS02] assets/images/paper_texture.png — 1024×1024 JPG
+  prompt: "Seamless cream paper texture (#FAF6EE), subtle fiber
+  details, very soft warm shadows like thick watercolor paper,
+  vintage warm parchment feel, photorealistic surface, top-left
+  soft light, no dark areas, bright and airy"
+  استفاده: پس‌زمینهٔ تخته + کارت‌ها
+
+[AS03] assets/images/coin.png — 256×256 PNG شفاف
+  prompt: "A single gold coin, front view slightly tilted, embossed
+  Persian dome silhouette in center, metallic gold gradient
+  (#D4AF37 to #F1C40F), soft highlight top-left, cast shadow
+  bottom-right, flat modern illustration with 3D shading, bright
+  cheerful, transparent background, board game icon style"
+  استفاده: انیمیشن سکه + آیکون پول
+
+[AS04] assets/images/dice_1.png تا dice_6.png — 256×256 × ۶ فایل
+  prompt برای dice_1: "A white ceramic die, front face showing 1 red
+  dot, isometric 3D view slightly tilted, soft warm shadow, flat
+  modern illustration, top-left light, clean white surface, rounded
+  corners, bright cheerful, transparent background"
+  prompt برای 2..6: همان با تعداد dots متفاوت
+  استفاده: انیمیشن تاس
+
+[AS05] assets/images/building_l1.png, building_l2.png, building_l3.png
+  — 512×512 × ۳ فایل
+  prompt l1 (خانه): "A small modern Persian house, cream walls,
+  flat roof with small parapet, turquoise wooden door, one window,
+  isometric 3D view, flat illustration, soft shading, warm sunlight,
+  bright cheerful palette, transparent background, cute miniature
+  building"
+  prompt l2 (آپارتمان): ۳ طبقه با بالکن، پنجره‌های بیشتر
+  prompt l3 (برج): ۷ طبقه شیشه‌ای مدرن، لوکس، نمای شهری
+  استفاده: ساختمان‌های محله
+
+[AS06] assets/images/avatar_normal.png, _rich.png, _broke.png,
+       _jailed.png, _happy.png — 256×256 × ۵ فایل
+  prompt normal: "Friendly stylized character avatar, neutral face,
+  simple flat illustration, gender-neutral, business casual,
+  warm skin tone, minimal features, top-left light, circular crop,
+  bright warm palette, transparent background"
+  rich: با کلاه، عینک آفتابی طلایی، سکه‌های شناور
+  broke: چهره غمگین، کیف پول خالی
+  jailed: پشت میله‌های نازک، ناراضی
+  happy: لبخند بزرگ، ستاره‌های کوچک
+  استفاده: مهره‌های زنده
+
+[AS07] assets/images/bank_pool.png — 512×512 PNG شفاف
+  prompt: "A golden pool or basin shaped like a Persian bowl,
+  overflowing with gold coins, sparkle particles, soft glow,
+  flat modern illustration, warm bright golden light, isometric
+  view, transparent background, board game centerpiece"
+  استفاده: بانک مشترک
+
+[AS08] assets/images/icons/identity_1.png تا identity_6.png
+  — 128×128 × ۶ فایل
+  prompt identity_1: "Circular badge, diagonal stripes pattern,
+  deep blue (#1E3A5F), flat illustration, thick white border,
+  minimal, bright cheerful, transparent background"
+  identity_2: قرمز #E74C3C + نقطه‌چین
+  identity_3: سبز #27AE60 + خط‌دار
+  identity_4: بنفش #8E44AD + شطرنجی
+  identity_5: نارنجی #F39C12 + موج
+  identity_6: صورتی #E91E63 + ستاره
+  استفاده: هویت رنگی بازیکن‌ها
+
+[AS09] assets/animations/ — Rive یا Lottie
+  - coin_spin.json: چرخش سکه، ۳۰ فریم loop
+  - dice_roll.json: پرتاب تاس، ۲۰ فریم
+  - contract_break.json: شکستن مهر، ۱۵ فریم
+  - phase_change.json: تغییر فاز، ۲۴ فریم
+  اگر Rive/Lottie محدود بود، AnimationController + فریم PNG
+
+[AS10] assets/sounds/ (اختیاری)
+  - dice_roll.mp3، coin_collect.mp3، contract_seal.mp3،
+  - phase_change.mp3، error_buzz.mp3
+
+[AS11] assets/images/splash_bg.png — 1080×1920 JPG
+  prompt: "Aerial isometric view of a modern Iranian city at golden
+  hour, cream buildings with turquoise domes and colorful flat roofs,
+  streets forming a board game path, warm golden light, soft
+  painterly style, flat illustration with 3D depth, no text, no
+  people, bright cheerful, premium game splash screen"
+  استفاده: SplashScreen
+
+[AS12] assets/images/menu_bg.png — 1080×1920 JPG
+  prompt: "Cozy indoor scene of a board game on a wooden table,
+  overhead isometric view, cream and warm palette, cards and gold
+  coins scattered, soft candlelight, warm bright atmosphere, flat
+  illustration, no people, no text, premium game menu background"
+  استفاده: MainMenuScreen
+
+[AS13] assets/images/app_icon.png — 512×512 PNG
+  prompt: "App icon, square with rounded corners, cream (#FAF6EE)
+  background, centered gold coin with Persian dome silhouette,
+  small turquoise crescent accent top-right, flat modern icon,
+  bold readable at small sizes, no text, bright cheerful"
+  استفاده: Launcher icon (۵ ابعاد 48,72,96,144,192)
+
+[AS14] assets/images/board_bg.png — 2048×2048 JPG
+  prompt: "Top-down isometric view of an Iranian neighborhood,
+  cream and warm tones, subtle grass patches, small trees, colorful
+  rooftops (turquoise, pink, orange, red, yellow, green), streets
+  with clear path lines, no people, no text, flat illustration with
+  3D depth, bright sunny daylight, cheerful"
+  استفاده: game_board پس‌زمینه (SECTION 19)
+
+[AS15] assets/images/property_card_frame.png — 512×768 PNG شفاف
+  prompt: "Empty playing card frame, white inner area, navy outer
+  border (#1E3A5F), ornate golden corners with Persian motifs,
+  small ribbon at top center, flat modern illustration, no text,
+  no color fill inside, transparent center, bright"
+  استفاده: قالب کارت ملک
+
+[AS16] assets/images/dice_rolling_strip.png — 1536×256 PNG شفاف
+  prompt: "6-frame animation strip of a white ceramic die rolling,
+  frames showing die at different rotation angles, consistent
+  bright lighting, flat 3D illustration, transparent background"
+  استفاده: dice_widget
+
+[AS17] assets/images/coin_fly_strip.png — 1024×256 PNG شفاف
+  prompt: "4-frame animation strip of a gold coin spinning in air,
+  frames at 0, 90, 180, 270 degrees, soft motion blur, transparent
+  background, flat illustration, bright"
+  استفاده: coin_particles
+
+[AS18] assets/images/phase_bull.png, phase_bear.png, phase_stable.png
+  — 256×256 × ۳ فایل
+  prompt bull: "Stylized golden bull head icon, upward arrow motif,
+  green accent (#27AE60), flat modern icon, bright, transparent"
+  bear: "Stylized grey bear head icon, downward arrow motif, red
+  accent (#E74C3C), flat modern icon, bright, transparent"
+  stable: "Balanced scale icon, golden and grey, subtle green
+  accent, flat modern icon, bright, transparent"
+  استفاده: phase_indicator
+
+[AS19] assets/images/ticker_arrow_up.png, ticker_arrow_down.png
+  — 64×64 × ۲ فایل
+  prompt up: "Simple flat upward arrow, green (#27AE60), bold,
+  transparent, 2px white border, bright"
+  down: همان ولی قرمز (#E74C3C)
+  استفاده: live_ticker
+
+[AS20] assets/images/contract_seal.png — 256×256 PNG شفاف
+  prompt: "A red wax seal, circular, embossed with Persian geometric
+  star pattern, cracked in half, flat illustration, bright warm,
+  transparent background, dramatic"
+  استفاده: secret_contract_layer
+
+═══════════════════════════════════════════════════════════════════════
+✅ چک‌لیست ASSET (۲۰ مورد — همه باید تولید شوند)
+═══════════════════════════════════════════════════════════════════════
+
+| شناسه | نام فایل | ابعاد | وضعیت |
+|-------|----------|-------|-------|
+| AS01  | card_back.png | 512×768 | ✅/❌ |
+| AS02  | paper_texture.png | 1024×1024 | ✅/❌ |
+| AS03  | coin.png | 256×256 | ✅/❌ |
+| AS04  | dice_1..6.png | 256×256×6 | ✅/❌ |
+| AS05  | building_l1..3.png | 512×512×3 | ✅/❌ |
+| AS06  | avatar_*.png | 256×256×5 | ✅/❌ |
+| AS07  | bank_pool.png | 512×512 | ✅/❌ |
+| AS08  | identity_*.png | 128×128×6 | ✅/❌ |
+| AS09  | animations/ | json/riv | ✅/❌ |
+| AS10  | sounds/ | mp3 | ✅/❌ |
+| AS11  | splash_bg.png | 1080×1920 | ✅/❌ |
+| AS12  | menu_bg.png | 1080×1920 | ✅/❌ |
+| AS13  | app_icon.png | 512×512+mipmaps | ✅/❌ |
+| AS14  | board_bg.png | 2048×2048 | ✅/❌ |
+| AS15  | property_card_frame.png | 512×768 | ✅/❌ |
+| AS16  | dice_rolling_strip.png | 1536×256 | ✅/❌ |
+| AS17  | coin_fly_strip.png | 1024×256 | ✅/❌ |
+| AS18  | phase_*.png | 256×256×3 | ✅/❌ |
+| AS19  | ticker_*.png | 64×64×2 | ✅/❌ |
+| AS20  | contract_seal.png | 256×256 | ✅/❌ |
+
+اگر یکی ❌ بود، کار تمام نیست. اگر ابزار تولید تصویر نبود، در
+ASSET_GUIDE.md ذکر کن + CustomPaint جایگزین بساز.
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 14 — پروتکل خروجی OUT01..OUT04
+═══════════════════════════════════════════════════════════════════════
+
+OUT01 فرمت هر فایل:
+      📄 [مسیر]
+      ===BEGIN-FILE [مسیر]===
+      [کد کامل]
+      ===END-FILE===
+
+OUT02 ترتیب تحویل:
+      1. pubspec.yaml + android/* + تنظیمات
+      2. core/theme/*
+      3. core/data/* (کپی دقیق SECTION 10,11,12)
+      4. core/models/*
+      5. core/rules/*
+      6. core/utils/*
+      7. network/*
+      8. ai/*
+      9. graphics/*
+      10. ui/screens/* + ui/widgets/*
+      11. providers/*
+      12. main.dart + app.dart
+      13. test/*
+      14. ASSET های ۲۰ گانه (تولید تصویر + ثبت در ASSET_GUIDE.md)
+      15. README.md
+      16. SELF-CHECK MATRIX
+
+OUT03 اگر فایل بزرگ است: «[فایل X — بخش n از m]» + کد کامل.
+
+OUT04 کامنت شناسه بالای هر فایل: // [R27][T07] rent_calculator.dart
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 15 — SELF-CHECK MATRIX (اجباری)
+═══════════════════════════════════════════════════════════════════════
+
+| گروه  | تعداد | تیک | مسیر فایل‌ها |
+|-------|-------|-----|--------------|
+| R     | 27    |     |              |
+| G     | 10    |     |              |
+| M     | 13    |     |              |
+| B     | 10    |     |              |
+| T     | 9     |     |              |
+| A     | 8     |     |              |
+| F     | 7     |     |              |
+| AS    | 20    |     |              |
+| OUT   | 4     |     |              |
+| INSTR | 8     |     |              |
+| BL    | 12    |     |              |
+| TH    | 15    |     |              |
+| TOTAL | 143   |     |              |
+
+سپس بنویس:
+  ✅ CHECKSUM: X/143
+  ✅ BUILD-READY: YES/NO
+  ✅ MISSING: [...]
+  ✅ FORBIDDEN-PATTERNS-FOUND: [...]
+  ✅ ASSETS-GENERATED: X/20
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 16 — INSTR01..INSTR08 (ضدفراموشی)
+═══════════════════════════════════════════════════════════════════════
+
+INSTR01 پاسخ اول: تأیید + فهرست ۱۴۳ شناسه + «آماده‌ام شروع کنم»
+INSTR02 هر فایل کامل، هرگز ناقص، هرگز TODO
+INSTR03 اگر محدودیت فنی، نسخهٔ سبک‌تر همان ایده (نه حذف)
+INSTR04 هیچ شناسه‌ای حذف نمی‌شود
+INSTR05 بعد از هر گروه، لیست سریع چک
+INSTR06 قبل از پایان، کل ۱۴۳ شناسه را مرور کن
+INSTR07 فایل‌های SECTION 10,11,12 را دقیقاً با همان محتوا کپی کن
+INSTR08 اگر می‌خواهی چیزی اضافه کنی، اول ذکر کن، بعد اضافه
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 17 — RUN SEQUENCE
+═══════════════════════════════════════════════════════════════════════
+
+گام ۱: پاسخ = تأیید + فهرست ۱۴۳ شناسه + «آماده‌ام». منتظر «شروع کن».
+گام ۲: بعد از «شروع کن»: SECTION 14 OUT02 را از ۱ تا ۱۶ طی کن.
+گام ۳: هر گروه کامل، لیست چک بزن.
+گام ۴: در پایان SELF-CHECK MATRIX + CHECKSUM.
+اگر «ادامه بده» → از جایی که مانده.
+اگر «از فایل X» → از همان فایل.
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 18 — محله‌های بازی (تم ایرانی — قفل شده)
+═══════════════════════════════════════════════════════════════════════
+
+تم = محله‌های شهر زاهدان. هیچ اسم خارجی در بازی نباید باشد.
+
+۱۵ محله در ۶ بلوک رنگی (ارزان به گران):
+  بلوک ۱ فیروزه‌ای: بزرگمهر، دانشجو
+  بلوک ۲ صورتی:    کامبوزیا، زیباشهر، دانشگاه
+  بلوک ۳ نارنجی:   شیرآباد، کریم‌آباد، لوری‌آباد
+  بلوک ۴ قرمز:     خیابان تهران، بازار بزرگ، شهرک میلاد
+  بلوک ۵ زرد:      میدان امام حسین، خیابان فردوسی
+  بلوک ۶ سبز:      شهرک قدس، بلوار خرمشهر
+
+۳ ملک عمومی:
+  پایانهٔ مسافربری، فرودگاه زاهدان، بازار مرزی میرجاوه
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 19 — چیدمان تخته: مسیر مارپیچ S-شکل (BL01..BL12) — LOCKED
+═══════════════════════════════════════════════════════════════════════
+
+🚫 چیدمان کلاسیک دوره‌ای (perimeter/Monopoly-style) ممنوع است.
+✅ چیدمان جدید: مسیر مارپیچ S-شکل که مثل یک رودخانه از میان محله‌ها
+   می‌گذرد.
+
+[BL01] چیدمان پایه: مسیر مارپیچ S-شکل — نه دوره‌ای
+       ۴ ردیف × ۸ خانه، متصل با منحنی‌های بزیه (bezier curves)
+       در نمای پورتِیت (1080×1920). مسیر از بالا-چپ شروع می‌شود،
+       به راست می‌رود، منحنی به پایین، به چپ، منحنی به پایین، به
+       راست، منحنی به پایین، به چپ (خانه آخر = نقطه هدف).
+
+[BL02] ابعاد مسیر:
+       عرض هر خانه: ~90dp (روی صفحه 1080dp = ۸ خانه = 720dp + فاصله)
+       ارتفاع هر ردیف: ~140dp
+       فاصله بین ردیف‌ها: ~80dp
+       منحنی اتصال: 60dp شعاع
+       ضخامت مسیر: 28dp با ۳بعدی
+
+[BL03] رسم مسیر:
+       - Path با CustomPainter (path_painter.dart)
+       - منحنی‌های بزیه برای اتصالات (smooth join)
+       - استروک ۳بعدی: دو لایه — لایه پایین تیره‌تر برای سایه
+       - رنگ مسیر: #F5F0E8 (کرم گرم) با حاشیه #D4C8A8
+       - وقتی یک خانه فعال می‌شود: درخشش طلایی ملایم
+
+[BL04] خانه‌ها:
+       - هر خانه یک کارت کوچک 90×140dp با گوشه‌های 12dp radius
+       - رنگ پس‌زمینه = رنگ بلوک (اگر city)
+       - آیکون ملک در بالا، نام در پایین، قیمت در وسط
+       - ساختمان‌ها به‌عنوان مینی‌آواتار (building_l1/l2/l3)
+         در گوشه بالا-راست کارت، روی هم چیده می‌شوند
+       - مالک با حاشیه ۳dp به رنگ هویت مالک مشخص می‌شود
+       - خانه‌های غیرملک (chance, tax, jail) با آیکون مخصوص
+
+[BL05] HUD مرکزی:
+       در وسطِ فضای خالی بین ردیف‌ها و کناره‌ها:
+       - نمای فاز اقتصادی (بزرگ، G01)
+       - تاس با انیمیشن
+       - پروفایل بازیکن فعال (وسط-بالا)
+       - دکمه‌های اصلی نوبت
+       - این ناحیه با کارت‌های شفاف و شناور روی پس‌زمینه
+
+[BL06] داک پایین (bottom dock):
+       - ارتفاع 120dp
+       - کارت‌های مینیاتوری همه بازیکن‌ها به‌صورت افقی
+       - هر کارت: آواتار (G05) + نام + نقد + دارایی + اعتبار
+       - کارت بازیکن فعال با حاشیه طلایی هایلایت
+       - اسکرول افقی اگر بیش از ۴ بازیکن
+
+[BL07] تیکر بالا (top ticker):
+       - ارتفاع 48dp، چسبیده به لبه بالا
+       - متن متحرک افقی با قیمت‌ها/تورم/فاز
+       - رنگ پس‌زمینه: شیشه‌ای روشن با blur ملایم
+
+[BL08] انیمیشن تاس:
+       - تاس در مرکز HUD پرتاب می‌شود (dice_rolling_strip)
+       - ۲۰ فریم در ۸۰۰ms
+       - پس از فرود، عدد ۱ ثانیه بزرگ نمایش داده می‌شود
+       - اگر ۶ بود، افکت جرقه + پیام «دوباره!»
+
+[BL09] دوربین (G10):
+       - روی مهره بازیکن فعال زوم ۱.۵× با ۳۰۰ms
+       - روی حراج زوم به میز
+       - روی شکستن قرارداد zoom-in سریع + shake
+       - تغییر فاز: zoom-out به نمای کامل
+
+[BL10] نوار پیشرفت مسیر (path_progress_bar):
+       - نوار نازک ۴dp در بالای bottom dock
+       - موقعیت هر بازیکن با نقطه رنگی
+       - موقعیت فعلی با درخشش
+
+[BL11] خانه‌های ویژه:
+       - start (خانه ۰): یک میدان بزرگ با مجسمه + دروازه
+       - jail (خانه ۸): ساختمان پلیس با میله
+       - freeParking (خانه ۱۶): پارک با درخت
+       - goToJail (خانه ۲۴): تابلوی «به زندان»
+       - bankPool (خانه ۳۰): ساختمان بانک با گنبد
+       هر کدام landmark بصری متمایز
+
+[BL12] Responsive:
+       - Portrait: ۴ ردیف × ۸ خانه عمودی
+       - Landscape: چیدمان ۸ ردیف × ۴ خانه یا مسیر افقی
+       - روی صفحه‌های کوچک (<360dp): خانه‌ها 70×110dp
+       - روی تبلت: خانه‌ها بزرگ‌تر با فاصله بیشتر
+
+⚠️ BL-LOCK: اگر ابزار یا کتابخانه محدودیت داشت، از CustomPaint
+   برای رسم مسیر و از Positioned + Stack برای چیدمان خانه‌ها
+   استفاده کن. هیچ‌گاه به چیدمان دوره‌ای برنگرد.
+
+فایل‌های مربوطه:
+  lib/graphics/serpentine_board.dart
+  lib/graphics/path_painter.dart
+  lib/graphics/neighborhood_background.dart
+  lib/core/data/board_path_data.dart
+  lib/core/rules/path_calculator.dart
+  lib/ui/widgets/center_hud.dart
+  lib/ui/widgets/bottom_dock.dart
+  lib/ui/widgets/top_ticker_bar.dart
+  lib/ui/widgets/space_widget.dart
+  lib/ui/widgets/path_progress_bar.dart
+
+═══════════════════════════════════════════════════════════════════════
+SECTION 20 — تم روشن و طراحی زنده (TH01..TH15) — LOCKED
+═══════════════════════════════════════════════════════════════════════
+
+🎨 تم بازی ۱۰۰٪ روشن (Light) است. هیچ حالت دارک یا نیمه‌تیره وجود
+ندارد. طراحی باید «زنده، شاد، دوستانه» باشد — نه خشک، نه بانکی-رسمی.
+
+[TH01] رنگ پایهٔ پس‌زمینه: #FAF6EE (کرم گرم روشن)
+       در همه صفحات به‌عنوان پایه استفاده شود.
+
+[TH02] رنگ سطح کارت‌ها: #FFFFFF (سفید خالص) با حاشیهٔ #EDE4D3
+
+[TH03] رنگ متن اصلی: #1E3A5F (سرمه‌ای — کنتراست عالی)
+[TH04] رنگ متن ثانویه: #6B7280 (خاکستری گرم)
+
+[TH05] رنگ تاکید ۱ (طلایی سکه): #D4AF37
+[TH06] رنگ تاکید ۲ (فیروزه‌ای): #1ABC9C
+[TH07] رنگ تاکید ۳ (مرجانی): #E74C3C
+[TH08] رنگ تاکید ۴ (سبز): #27AE60
+
+[TH09] سایه‌ها — همه ملایم و گرم:
+       - shadow-sm: BoxShadow(color: rgba(30,58,95,0.06), blur: 4, offset(0,2))
+       - shadow-md: BoxShadow(color: rgba(30,58,95,0.08), blur: 8, offset(0,4))
+       - shadow-lg: BoxShadow(color: rgba(30,58,95,0.10), blur: 16, offset(0,8))
+       ⚠️ سایه‌های سیاه یا قوی ممنوع.
+
+[TH10] فونت:
+       - اصلی: Vazirmatn (google_fonts) — پشتیبانی کامل فارسی
+       - fallback: Vazir → Roboto
+       - اندازه‌ها: displayLarge(32sp), headline(24sp), title(18sp),
+         body(14sp), caption(12sp)
+       - وزن‌ها: 400 (body), 500 (labels), 700 (titles)
+
+[TH11] اندازه‌ها و شکل‌ها:
+       - Border radius: sm=8dp, md=12dp, lg=20dp, xl=32dp
+       - کارت‌ها: 12dp
+       - دکمه‌ها: 20dp
+       - مودال‌ها: 32dp
+       - آیکون‌ها: outline-style ۲dp stroke
+
+[TH12] فاصله‌گذاری — مقیاس ۴:
+       4, 8, 12, 16, 24, 32, 48, 64 dp
+       هیچ فاصله‌ای خارج از این مقیاس استفاده نشود.
+
+[TH13] مدت انیمیشن:
+       - micro (هاور، ripple): 150ms
+       - standard (کارت باز/بسته): 300ms
+       - macro (صفحه، فاز، تاس): 500ms
+       - cinematic (دوربین G10): 800ms
+
+[TH14] Easing:
+       - ورود: Curves.easeOutCubic
+       - خروج: Curves.easeInCubic
+       - گذار: Curves.easeInOutCubic
+       - پرتاب تاس: Curves.elasticOut
+       - پرواز سکه: Curves.easeOutQuad
+
+[TH15] دسترس‌پذیری (WCAG AA):
+       - همه متن‌ها باید کنتراست ۴.۵:۱+ داشته باشند روی پس‌زمینه
+       - دکمه‌ها حداقل 48×48dp برای لمس
+       - آیکون‌ها با توضیح صوتی (semantics)
+       - رنگ تنها نشانگر اطلاعات نباشد (آیکون + متن هم)
+
+فایل‌های تم:
+  lib/core/theme/app_theme.dart
+  lib/core/theme/colors.dart
+  lib/core/theme/typography.dart
+  lib/core/theme/dimensions.dart
+  lib/core/theme/shadows.dart
+  lib/providers/theme_provider.dart
+
+⚠️ TH-LOCK: هیچ صفحه‌ای نباید از تم روشن خارج شود. حتی صفحه‌های
+   مودال (حراج، قرارداد، رأی) هم با پس‌زمینهٔ روشن با blur.
+
+═══════════════════════════════════════════════════════════════════════
+🔐 END OF PROMPT — 143 IDS — CHECKSUM LOCKED — v4.0
+═══════════════════════════════════════════════════════════════════════

@@ -5,10 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.neonbankroll.neon_bankroll"
-
-    // mobile_scanner 7.x compiles against SDK 36 and needs at least SDK 23;
-    // both are pinned here so the merged manifest stays predictable.
+    namespace = "ir.zahedan.bankroll_plato"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
@@ -18,20 +15,23 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.neonbankroll.neon_bankroll"
+        applicationId = "ir.zahedan.bankroll_plato"
+        // You can update the following values to match your application needs.
+        // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 24
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 34
+        // Uses the version code from pubspec.yaml. When using split APKs, 1000 * ABI_VERSION
+        // is added automatically by Flutter. (https://developer.android.com/studio/build/configure-apk-splits#configure-APK-versions)
+        // You can force using the value of versionCode by specifying the `-P force-version-code-ignoring-abi=true`
+        // flag during build.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
 
     buildTypes {
         release {
-            // The release build reuses the debug keys so `flutter run --release`
-            // works out of the box. Swap in your own keystore before publishing.
+            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
-            isMinifyEnabled = false
-            isShrinkResources = false
         }
     }
 }

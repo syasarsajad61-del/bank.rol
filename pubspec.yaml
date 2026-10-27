@@ -1,32 +1,42 @@
-name: neon_bankroll
-description: "نئون بانکرول — بازی تخته‌ای اقتصادی چندنفره با میزبانی محلی و شبکه محلی"
-publish_to: 'none'
-
+# [T01][T03][F02] Offline game application
+name: bankroll_plato
+description: A Persian offline economic board game set in Zahedan.
+publish_to: none
 version: 1.0.0+1
-
 environment:
-  sdk: ^3.13.5
-
+  sdk: '>=3.10.0 <4.0.0'
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-
-  cupertino_icons: ^2.0.0
-  flutter_riverpod: ^3.4.3
-  shelf: ^1.4.3
-  shelf_web_socket: ^3.0.0
+  provider: ^6.1.5
   web_socket_channel: ^3.0.3
-  qr_flutter: ^4.1.0
-  mobile_scanner: ^7.4.2
-  flutter_animate: ^4.5.2
-  wakelock_plus: ^1.8.1
-
+  rive: ^0.13.20
+  lottie: ^3.3.1
+  shared_preferences: ^2.3.0
+  sqflite: ^2.4.0
+  uuid: ^4.5.3
+  crypto: ^3.0.7
+  cryptography: ^2.7.0
+  path: ^1.9.1
+  path_provider: ^2.1.5
+  audioplayers: ^6.1.0
+  collection: ^1.19.1
+  google_fonts: ^6.3.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/images/icons/
+    - assets/animations/
+    - assets/sounds/
+    - assets/fonts/
+  fonts:
+    - family: Vazirmatn
+      fonts:
+        - asset: assets/fonts/Vazirmatn-Regular.ttf

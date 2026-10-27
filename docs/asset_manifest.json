@@ -1,0 +1,501 @@
+[
+  {
+    "name": "card_back",
+    "file": "assets/images/card_back.png",
+    "size": [
+      512,
+      768
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.785,
+    "transparent_corner": true
+  },
+  {
+    "name": "paper_texture",
+    "file": "assets/images/paper_texture.png",
+    "size": [
+      1024,
+      1024
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 1.0,
+    "transparent_corner": false
+  },
+  {
+    "name": "coin",
+    "file": "assets/images/coin.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.515,
+    "transparent_corner": true
+  },
+  {
+    "name": "bank_pool",
+    "file": "assets/images/bank_pool.png",
+    "size": [
+      512,
+      512
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.458,
+    "transparent_corner": true
+  },
+  {
+    "name": "splash_bg",
+    "file": "assets/images/splash_bg.png",
+    "size": [
+      1080,
+      1920
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 1.0,
+    "transparent_corner": false
+  },
+  {
+    "name": "menu_bg",
+    "file": "assets/images/menu_bg.png",
+    "size": [
+      1080,
+      1920
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 1.0,
+    "transparent_corner": false
+  },
+  {
+    "name": "app_icon",
+    "file": "assets/images/app_icon.png",
+    "size": [
+      512,
+      512
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 1.0,
+    "transparent_corner": false
+  },
+  {
+    "name": "board_bg",
+    "file": "assets/images/board_bg.png",
+    "size": [
+      2048,
+      2048
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 1.0,
+    "transparent_corner": false
+  },
+  {
+    "name": "property_card_frame",
+    "file": "assets/images/property_card_frame.png",
+    "size": [
+      512,
+      768
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.278,
+    "transparent_corner": true
+  },
+  {
+    "name": "dice_rolling_strip",
+    "file": "assets/images/dice_rolling_strip.png",
+    "size": [
+      1536,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.314,
+    "transparent_corner": true
+  },
+  {
+    "name": "coin_fly_strip",
+    "file": "assets/images/coin_fly_strip.png",
+    "size": [
+      1024,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.357,
+    "transparent_corner": true
+  },
+  {
+    "name": "contract_seal",
+    "file": "assets/images/contract_seal.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.36,
+    "transparent_corner": true
+  },
+  {
+    "name": "dice_1",
+    "file": "assets/images/dice_1.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.297,
+    "transparent_corner": true
+  },
+  {
+    "name": "icons/identity_1",
+    "file": "assets/images/icons/identity_1.png",
+    "size": [
+      128,
+      128
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.661,
+    "transparent_corner": true
+  },
+  {
+    "name": "dice_2",
+    "file": "assets/images/dice_2.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.398,
+    "transparent_corner": true
+  },
+  {
+    "name": "icons/identity_2",
+    "file": "assets/images/icons/identity_2.png",
+    "size": [
+      128,
+      128
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.611,
+    "transparent_corner": true
+  },
+  {
+    "name": "dice_3",
+    "file": "assets/images/dice_3.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.396,
+    "transparent_corner": true
+  },
+  {
+    "name": "icons/identity_3",
+    "file": "assets/images/icons/identity_3.png",
+    "size": [
+      128,
+      128
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.586,
+    "transparent_corner": true
+  },
+  {
+    "name": "dice_4",
+    "file": "assets/images/dice_4.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.406,
+    "transparent_corner": true
+  },
+  {
+    "name": "icons/identity_4",
+    "file": "assets/images/icons/identity_4.png",
+    "size": [
+      128,
+      128
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.657,
+    "transparent_corner": true
+  },
+  {
+    "name": "dice_5",
+    "file": "assets/images/dice_5.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.49,
+    "transparent_corner": true
+  },
+  {
+    "name": "icons/identity_5",
+    "file": "assets/images/icons/identity_5.png",
+    "size": [
+      128,
+      128
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.612,
+    "transparent_corner": true
+  },
+  {
+    "name": "dice_6",
+    "file": "assets/images/dice_6.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.439,
+    "transparent_corner": true
+  },
+  {
+    "name": "icons/identity_6",
+    "file": "assets/images/icons/identity_6.png",
+    "size": [
+      128,
+      128
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.643,
+    "transparent_corner": true
+  },
+  {
+    "name": "building_l1",
+    "file": "assets/images/building_l1.png",
+    "size": [
+      512,
+      512
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.556,
+    "transparent_corner": true
+  },
+  {
+    "name": "building_l2",
+    "file": "assets/images/building_l2.png",
+    "size": [
+      512,
+      512
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.702,
+    "transparent_corner": true
+  },
+  {
+    "name": "building_l3",
+    "file": "assets/images/building_l3.png",
+    "size": [
+      512,
+      512
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.505,
+    "transparent_corner": true
+  },
+  {
+    "name": "avatar_normal",
+    "file": "assets/images/avatar_normal.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.51,
+    "transparent_corner": true
+  },
+  {
+    "name": "avatar_rich",
+    "file": "assets/images/avatar_rich.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.529,
+    "transparent_corner": true
+  },
+  {
+    "name": "avatar_broke",
+    "file": "assets/images/avatar_broke.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.26,
+    "transparent_corner": true
+  },
+  {
+    "name": "avatar_jailed",
+    "file": "assets/images/avatar_jailed.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.492,
+    "transparent_corner": true
+  },
+  {
+    "name": "avatar_happy",
+    "file": "assets/images/avatar_happy.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.391,
+    "transparent_corner": true
+  },
+  {
+    "name": "phase_bull",
+    "file": "assets/images/phase_bull.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.44,
+    "transparent_corner": true
+  },
+  {
+    "name": "phase_bear",
+    "file": "assets/images/phase_bear.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.448,
+    "transparent_corner": true
+  },
+  {
+    "name": "phase_stable",
+    "file": "assets/images/phase_stable.png",
+    "size": [
+      256,
+      256
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.276,
+    "transparent_corner": true
+  },
+  {
+    "name": "ticker_arrow_up",
+    "file": "assets/images/ticker_arrow_up.png",
+    "size": [
+      64,
+      64
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.238,
+    "transparent_corner": true
+  },
+  {
+    "name": "ticker_arrow_down",
+    "file": "assets/images/ticker_arrow_down.png",
+    "size": [
+      64,
+      64
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "alpha_coverage": 0.351,
+    "transparent_corner": true
+  },
+  {
+    "name": "landmark_bankPool",
+    "file": "assets/images/landmark_bankPool.png",
+    "size": [
+      512,
+      512
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "prompt": "Modern flat illustration, soft 3D shading, cream/navy/gold, upper-left light, secular friendly city landmark landmark_bankPool, no text, transparent background, padding."
+  },
+  {
+    "name": "landmark_goToJail",
+    "file": "assets/images/landmark_goToJail.png",
+    "size": [
+      512,
+      512
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "prompt": "Modern flat illustration, soft 3D shading, cream/navy/gold, upper-left light, secular friendly city landmark landmark_goToJail, no text, transparent background, padding."
+  },
+  {
+    "name": "landmark_jail",
+    "file": "assets/images/landmark_jail.png",
+    "size": [
+      512,
+      512
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "prompt": "Modern flat illustration, soft 3D shading, cream/navy/gold, upper-left light, secular friendly city landmark landmark_jail, no text, transparent background, padding."
+  },
+  {
+    "name": "landmark_park",
+    "file": "assets/images/landmark_park.png",
+    "size": [
+      512,
+      512
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "prompt": "Modern flat illustration, soft 3D shading, cream/navy/gold, upper-left light, secular friendly city landmark landmark_park, no text, transparent background, padding."
+  },
+  {
+    "name": "landmark_start",
+    "file": "assets/images/landmark_start.png",
+    "size": [
+      512,
+      512
+    ],
+    "generated_with": "built-in image_gen",
+    "date": "2026-10-27",
+    "prompt": "Modern flat illustration, soft 3D shading, cream/navy/gold, upper-left light, secular friendly city landmark landmark_start, no text, transparent background, padding."
+  }
+]
